@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/09/02 14:16:02.000.860,=C:\Users\usuario\OneDrive\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2024/09/02 14:16:02.000.840,=C:\Users\usuario\OneDrive\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2024/11/08 16:00:28.432,=C:\Users\usuario\OneDrive\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2024/11/08 16:00:28.499,=C:\Users\usuario\OneDrive\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2024/11/08 16:01:07.464,=C:\Users\usuario\OneDrive\Documents\Embarcadero\Studio\Projects\Unit2.cpp</Transaction>
+    <Transaction>2024/11/08 16:01:34.467,C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\DicolaColaPCH1.h=C:\Users\usuario\OneDrive\Documents\Embarcadero\Studio\Projects\Project1PCH1.h</Transaction>
+    <Transaction>2024/11/08 16:01:34.520,C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\Unit1.cpp=C:\Users\usuario\OneDrive\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>2024/11/08 16:01:34.520,C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\Unit1.dfm=C:\Users\usuario\OneDrive\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2024/11/08 16:01:34.520,C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\Unit1.h=C:\Users\usuario\OneDrive\Documents\Embarcadero\Studio\Projects\Unit1.h</Transaction>
+    <Transaction>2024/11/08 16:01:34.557,C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\Unit2.cpp=C:\Users\usuario\OneDrive\Documents\Embarcadero\Studio\Projects\Unit2.cpp</Transaction>
+    <Transaction>2024/11/08 16:01:34.557,C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\Unit2.h=C:\Users\usuario\OneDrive\Documents\Embarcadero\Studio\Projects\Unit2.h</Transaction>
+    <Transaction>2024/11/08 16:01:34.593,C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\DicolaCola.cbproj=C:\Users\usuario\OneDrive\Documents\Embarcadero\Studio\Projects\Project1.cbproj</Transaction>
+    <Transaction>2024/11/08 16:02:01.332,C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\CDicola_Cola.h=C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\Unit2.h</Transaction>
+    <Transaction>2024/11/08 16:02:01.332,C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\CDicola_Cola.cpp=C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\Unit2.cpp</Transaction>
+    <Transaction>2024/11/08 16:02:08.889,C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\PForm.cpp=C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\Unit1.cpp</Transaction>
+    <Transaction>2024/11/08 16:02:08.889,C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\PForm.dfm=C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\Unit1.dfm</Transaction>
+    <Transaction>2024/11/08 16:02:08.889,C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\PForm.h=C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\Unit1.h</Transaction>
+    <Transaction>2024/11/08 16:04:03.053,=C:\Universidad_Gustavo\2-2024\E.Datos l\Colas\DiCola\DicolaCola\CCola_Puntero.cpp</Transaction>
+  </Transactions>
+</BorlandProject>
