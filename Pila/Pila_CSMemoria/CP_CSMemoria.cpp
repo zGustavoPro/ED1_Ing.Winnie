@@ -72,76 +72,54 @@ void Pila_CSMemoria :: mostrar(int x1,int y1,TCanvas* Canvas) {
 //Notaciones
 
 //---------------------------------------------------------------------------
- double Pila_CSMemoria ::evaluar_PreFija(AnsiString expPreFija,int x1,int y1,TCanvas* Canvas) {
+ double Pila_CSMemoria ::evaluar_PreFija(AnsiString expPreFija) {
 	string num="";
-	AnsiString cad;
 	for (int i = expPreFija.Length(); i >=1; i--) {
 		char c = expPreFija[i];
 		if (isdigit(c)){
 		num+=c;
 	   } else if(!esOperador(c) && !isdigit(c) && !num.empty()){
-			cad=InputBox("Presione enter para continuar","","");
 			meter(stoi(num));
-			m->MostrarRango(x1,y1,0,15,Canvas);
 			num="";
 		} else if (esOperador(c)) {
 			int op1, op2;
-			cad=InputBox("Presione enter para continuar","","");
 			sacar(op1);
-			m->MostrarRango(x1,y1,0,15,Canvas);
-			cad=InputBox("Presione enter para continuar","","");
 			sacar(op2);
-			m->MostrarRango(x1,y1,0,15,Canvas);
 			double resultado = evaluar(op1, c, op2);
-			cad=InputBox("Presione enter para continuar","","");
 			meter(resultado);
-			m->MostrarRango(x1,y1,0,15,Canvas);
 		}
 	}
 	int p;
-	cad=InputBox("Presione enter para continuar","","");
 	sacar(p);
-	m->MostrarRango(x1,y1,0,15,Canvas);
 	return p;
 }
 
 //---------------------------------------------------------------------------
- double Pila_CSMemoria ::evaluar_PosFija(AnsiString expPosFija,int x1,int y1,TCanvas* Canvas) {
+ double Pila_CSMemoria ::evaluar_PosFija(AnsiString expPosFija) {
 	string num="";
-	AnsiString cad;
 	for (int i = 1; i <= expPosFija.Length(); i++) {
 		char c = expPosFija[i];
 		if (isdigit(c)){
 		num+=c;
 	   } else if(!esOperador(c) && !isdigit(c) && !num.empty()){
-			 cad=InputBox("Presione enter para continuar","","");
 			meter(stoi(num));
-			m->MostrarRango(x1,y1,0,15,Canvas);
 			num="";
 		} else if (esOperador(c)) {
 			int op2, op1;
-			cad=InputBox("Presione enter para continuar","","");
 			sacar(op2);
-			m->MostrarRango(x1,y1,0,15,Canvas);
-			cad=InputBox("Presione enter para continuar","","");
 			sacar(op1);
-			m->MostrarRango(x1,y1,0,15,Canvas);
 			double resultado = evaluar(op1, c, op2);
-			cad =InputBox("Presione enter para continuar","","");
 			meter(resultado);
-			m->MostrarRango(x1,y1,0,15,Canvas);
 		}
 	}
 	int p;
-	cad=InputBox("Presione enter para continuar","","");
 	sacar(p);
-	m->MostrarRango(x1,y1,0,15,Canvas);
 	return p;
 }
 //---------------------------------------------------------------------------
 double Pila_CSMemoria :: evaluar(int x1, char signo, int x2) {
 	switch (signo) {
-		case '^': return pow(x1,x2);  //por si las moscas
+		case '^': return pow(x1,x2);
 		case '+': return x1 + x2;
 		case '-': return x1 - x2;
 		case '*': return x1 * x2;
@@ -181,10 +159,55 @@ int Pila_CSMemoria :: prioridad(char operador) {
 	return 0;
 }
 //---------------------------------------------------------------------------
- string Pila_CSMemoria :: postfija(string infija,int x1,int y1,TCanvas* Canvas) {
+ string Pila_CSMemoria ::postfija(string exp) {
+	string res = "",num = "";   int s;
+
+	for (int i = 0; i < exp.length(); i++) {
+		char c = exp[i];
+		if (c == '(') {
+			meter(c);
+		} else if (c == ')') {
+			while (!vacia() && cima() != '(') {
+				sacar(s);
+				res += s;
+			}
+			sacar(s);
+		} else if (!esOperador(c)) {
+			num += c;
+		} else {
+			if (!num.empty()) {
+				res += num + ",";
+				num = "";
+			}
+			while (!vacia() && prioridad(c) <= prioridad(cima())) {
+				sacar(s);
+				res += s;
+				res += ",";
+			}
+			meter(c);
+		}
+	}
+		if (!num.empty()) {
+		res += num + ",";
+		}
+
+	while (!vacia()) {
+		sacar(s);
+		res += s;
+		res += ",";
+	}
+
+	if (!res.empty() && res.back() == ',') {
+		res.pop_back();
+	}
+
+	return res;
+}
+
+	/*
+  string Pila_CSMemoria :: postfija(string infija) {
 	string PostFija = "";
 	string num = "";
-	AnsiString cad;
 	int aux;
 	for (int i = 0; i < infija.length(); i++) {
 		char c = infija[i];
@@ -200,32 +223,24 @@ int Pila_CSMemoria :: prioridad(char operador) {
 				aux = cima();
 				while (!salir) {
 					if (vacia() || prioridad(c) > prioridad(aux)) {
-					   cad=InputBox("Presione enter para continuar","","");
 						meter(c);
-						m->MostrarRango(x1,y1,0,15,Canvas);
 						salir = true;
 					} else {
-						cad=InputBox("Presione enter para continuar","","");
 						sacar(aux);
-						m->MostrarRango(x1,y1,0,15,Canvas);
 						PostFija += aux;
 						PostFija += ",";
 					}
 				}
 			} else if (c == ')') {
 				do {
-					cad=InputBox("Presione enter para continuar","","");
 					sacar(aux);
-					m->MostrarRango(x1,y1,0,15,Canvas);
 					if (aux != '(') {
 						PostFija += aux;
 						PostFija += ",";
 					}
 				} while (aux != '(');
 			} else if (c == '(') {
-				cad=InputBox("Presione enter para continuar","","");
 				meter(c);
-				m->MostrarRango(x1,y1,0,15,Canvas);
 			}
 		}
 	}
@@ -233,9 +248,7 @@ int Pila_CSMemoria :: prioridad(char operador) {
 		PostFija += num + ",";
 	}
 	while (!vacia()) {
-		cad=InputBox("Presione enter para continuar","","");
 		sacar(aux);
-		m->MostrarRango(x1,y1,0,15,Canvas);
 		PostFija += aux;
 		PostFija += ",";
 	}
@@ -244,7 +257,7 @@ int Pila_CSMemoria :: prioridad(char operador) {
 	}
 	return PostFija;
 }
-
+	 */
 //---------------------------------------------------------------------------
 string Pila_CSMemoria :: invertido(string s) {
 	string r = "";
@@ -254,10 +267,9 @@ string Pila_CSMemoria :: invertido(string s) {
 }
 
 //---------------------------------------------------------------------------
-string Pila_CSMemoria::prefija(string exp,int x1,int y1,TCanvas* Canvas) {
+string Pila_CSMemoria::prefija(string exp) {
 	string res = "";
 	string num = "";
-	AnsiString cad;
 	for (int i = exp.length() - 1; i >= 0; i--) {
 		char c = exp[i];
 		if (isdigit(c)) {
@@ -268,15 +280,11 @@ string Pila_CSMemoria::prefija(string exp,int x1,int y1,TCanvas* Canvas) {
 				num = "";
 			}
 			if (c == ')') {
-			cad=InputBox("Presione enter para continuar","","");
 				meter(c);
-			m->MostrarRango(x1,y1,0,15,Canvas);
 			} else if (c == '(') {
 				int s;
 				while (cima() != ')') {
-					cad=InputBox("Presione enter para continuar","","");
 					sacar(s);
-					m->MostrarRango(x1,y1,0,15,Canvas);
 					res += (char)s;
 					res += ",";
 				}
@@ -284,9 +292,7 @@ string Pila_CSMemoria::prefija(string exp,int x1,int y1,TCanvas* Canvas) {
 			} else if (esOperador(c)) {
 				while (!vacia() && prioridad(c) < prioridad(cima())) {
 					int s;
-					cad=InputBox("Presione enter para continuar","","");
 					sacar(s);
-					m->MostrarRango(x1,y1,0,15,Canvas);
 					res += (char)s;
 					res += ",";
 				}
@@ -299,9 +305,7 @@ string Pila_CSMemoria::prefija(string exp,int x1,int y1,TCanvas* Canvas) {
 	}
 	while (!vacia()) {
 		int s;
-		cad=InputBox("Presione enter para continuar","","");
 		sacar(s);
-		m->MostrarRango(x1,y1,0,15,Canvas);
 		res += (char)s;
 		res += ",";
 	}

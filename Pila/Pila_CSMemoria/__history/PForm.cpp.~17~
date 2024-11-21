@@ -12,7 +12,7 @@ TForm1 *Form1;
 __fastcall TForm1::TForm1(TComponent* Owner)
 	: TForm(Owner)
 {
-post=new Notaciones(m);
+
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button1Click(TObject *Sender)
@@ -42,7 +42,7 @@ void __fastcall TForm1::Button5Click(TObject *Sender)
 int a=StrToInt(InputBox("desde","",""));
 int b=StrToInt(InputBox("hasta","",""));
 m->MostrarRango(300,80,a,b,Canvas);
-pila->mostrar(650,80,Canvas);
+//pila->mostrar(650,80,Canvas);
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button6Click(TObject *Sender)
@@ -69,9 +69,17 @@ Form1->Close();
 void __fastcall TForm1::Button10Click(TObject *Sender)
 {
 AnsiString cad=InputBox("ingrese el ejercicio a resolver","","");
-post->parentesisOk(cad.c_str());
-   AnsiString cad2=post->postfija(cad.c_str()).c_str();
-   ShowMessage(post->evaluar_PosFija(cad2));
+AnsiString cad2=pila->postfija(cad.c_str()).c_str();
+ShowMessage(cad2);
+ShowMessage(pila->evaluar_PosFija(cad2));
+}
+//---------------------------------------------------------------------------
+void __fastcall TForm1::Button11Click(TObject *Sender)
+{
+  AnsiString cad=InputBox("ingrese el ejercicio a resolver","","");
+  AnsiString cad2=pila->prefija(cad.c_str()).c_str();
+  ShowMessage(cad2);
+  ShowMessage(pila->evaluar_PreFija(cad2));
 }
 //---------------------------------------------------------------------------
 

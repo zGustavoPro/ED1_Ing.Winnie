@@ -21,14 +21,14 @@ public:
 	int cima();
 	void mostrar(int,int,TCanvas*);
 	//Posfija_Prefija
-	double evaluar_PosFija(AnsiString);
-	double evaluar_PreFija(AnsiString);
+	double evaluar_PosFija(AnsiString,int,int,TCanvas*);
+	double evaluar_PreFija(AnsiString,int,int,TCanvas*);
 	double evaluar(int,char,int);
 	bool esOperador(char);
 	int prioridad(char);
 	string invertido(string);
-	string postfija(string);
-	string prefija(string);
+	string postfija(string,int,int,TCanvas*);
+	string prefija(string,int,int,TCanvas*);
 	bool parentesisOk(string);
 };
 #endif

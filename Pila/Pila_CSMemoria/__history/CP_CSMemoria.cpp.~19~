@@ -72,21 +72,16 @@ void Pila_CSMemoria :: mostrar(int x1,int y1,TCanvas* Canvas) {
 //Notaciones
 
 //---------------------------------------------------------------------------
- double Pila_CSMemoria :: evaluar_PreFija(AnsiString expPreFija) {
-	AnsiString signo = "+-/*^%";
-	AnsiString num = "";
-
-	for (int i = expPreFija.Length(); i > 0; i--) {
+ double Pila_CSMemoria ::evaluar_PreFija(AnsiString expPreFija) {
+	string num="";
+	for (int i = expPreFija.Length(); i >=1; i--) {
 		char c = expPreFija[i];
-
-		if (isdigit(c)) {
-			num = c + num;
-		} else if (num != "") {
-			meter(StrToInt(num));
-			num = "";
-		}
-
-		if (esOperador(c)) {
+		if (isdigit(c)){
+		num+=c;
+	   } else if(!esOperador(c) && !isdigit(c) && !num.empty()){
+			meter(stoi(num));
+			num="";
+		} else if (esOperador(c)) {
 			int op1, op2;
 			sacar(op1);
 			sacar(op2);
@@ -94,28 +89,22 @@ void Pila_CSMemoria :: mostrar(int x1,int y1,TCanvas* Canvas) {
 			meter(resultado);
 		}
 	}
-	if (num != "") {
-		meter(StrToInt(num));
-	}
 	int p;
 	sacar(p);
 	return p;
 }
-//---------------------------------------------------------------------------
-double Pila_CSMemoria :: evaluar_PosFija(AnsiString expPosFija) {
-	AnsiString signo = "+-/*^%";
-	AnsiString num = "";
 
+//---------------------------------------------------------------------------
+ double Pila_CSMemoria ::evaluar_PosFija(AnsiString expPosFija) {
+	string num="";
 	for (int i = 1; i <= expPosFija.Length(); i++) {
 		char c = expPosFija[i];
-
-		if (isdigit(c)) {
-			num = num + c;
-		} else if (num != "") {
-			meter(StrToInt(num));
-			num = "";
-		}
-		if (esOperador(c)) {
+		if (isdigit(c)){
+		num+=c;
+	   } else if(!esOperador(c) && !isdigit(c) && !num.empty()){
+			meter(stoi(num));
+			num="";
+		} else if (esOperador(c)) {
 			int op2, op1;
 			sacar(op2);
 			sacar(op1);
@@ -123,23 +112,18 @@ double Pila_CSMemoria :: evaluar_PosFija(AnsiString expPosFija) {
 			meter(resultado);
 		}
 	}
-	if (num != "") {
-		meter(StrToInt(num));
-	}
-
 	int p;
 	sacar(p);
 	return p;
 }
-
 //---------------------------------------------------------------------------
 double Pila_CSMemoria :: evaluar(int x1, char signo, int x2) {
 	switch (signo) {
-		case '^': return pow(x1,x2);  //por si las moscas
+		case '^': return pow(x1,x2);
 		case '+': return x1 + x2;
 		case '-': return x1 - x2;
 		case '*': return x1 * x2;
-		case '%': return x1 % x2;
+		case '%': return (x1) % (x2);
 		case '/':
 			if (x2 != 0)
 				return x1 / x2;
@@ -175,33 +159,142 @@ int Pila_CSMemoria :: prioridad(char operador) {
 	return 0;
 }
 //---------------------------------------------------------------------------
-string Pila_CSMemoria :: postfija(string exp) {
-	string res="";
-	string num="";
-	for (int i=0; i<exp.length(); i++) {
-		char c=exp[i];
+ string Pila_CSMemoria :: postfija(string exp) {
+	string res = "";
+	string num = "";
+	for (int i = 0; i < exp.length(); i++) {
+		char c = exp[i];
+		if (c == '(')
+			meter(c);
+		else if (c == ')') {
+			int s;
+			while (cima() != '(') {
+				sacar(s);
+				res += s;
+			}
+		   sacar(s);
+		}
+		else if (!esOperador(c))
+					num += c;
+		else {
+			 if (!num.empty()) {
+				  res += num;
+				  res += ",";
+				  num = "";
+			 }
+			while (!vacia() && prioridad(c) < prioridad(cima())) {
+				int s;
+				sacar(s);
+				res += s;
+				res += ",";
+			}
+			meter(c);
+		}
+	}
+	 if (!num.empty()) {
+		res += num + ",";
+	 }
+	 int aux;
+	while (!vacia()) {
+		sacar(aux);
+		res += aux;
+		res += ",";
+	}
+	if (!res.empty() && res.back() == ',') {
+		res.pop_back();
+	}
+	return res;
+}
+ /* string Pila_CSMemoria :: postfija(string infija) {
+	string PostFija = "";
+	string num = "";
+	int aux;
+	for (int i = 0; i < infija.length(); i++) {
+		char c = infija[i];
 		if (isdigit(c)) {
 			num += c;
 		} else {
 			if (!num.empty()) {
-				res +=num+",";
-				num="";
+				PostFija += num + ",";
+				num = "";
 			}
-			if (c == '(')
+			if (esOperador(c)) {
+				bool salir = false;
+				aux = cima();
+				while (!salir) {
+					if (vacia() || prioridad(c) > prioridad(aux)) {
+						meter(c);
+						salir = true;
+					} else {
+						sacar(aux);
+						PostFija += aux;
+						PostFija += ",";
+					}
+				}
+			} else if (c == ')') {
+				do {
+					sacar(aux);
+					if (aux != '(') {
+						PostFija += aux;
+						PostFija += ",";
+					}
+				} while (aux != '(');
+			} else if (c == '(') {
 				meter(c);
-			else if (c == ')') {
+			}
+		}
+	}
+	if (!num.empty()) {
+		PostFija += num + ",";
+	}
+	while (!vacia()) {
+		sacar(aux);
+		PostFija += aux;
+		PostFija += ",";
+	}
+	if (!PostFija.empty() && PostFija.back() == ',') {
+		PostFija.pop_back();
+	}
+	return PostFija;
+}
+	*/
+//---------------------------------------------------------------------------
+string Pila_CSMemoria :: invertido(string s) {
+	string r = "";
+	for (int i = 0; i < s.length(); i++)
+		r = s[i] + r;
+	return r;
+}
+
+//---------------------------------------------------------------------------
+string Pila_CSMemoria::prefija(string exp) {
+	string res = "";
+	string num = "";
+	for (int i = exp.length() - 1; i >= 0; i--) {
+		char c = exp[i];
+		if (isdigit(c)) {
+			num = c+num;
+		} else {
+			if (!num.empty()) {
+				res += num + ",";
+				num = "";
+			}
+			if (c == ')') {
+				meter(c);
+			} else if (c == '(') {
 				int s;
-				while (cima() != '(') {
+				while (cima() != ')') {
 					sacar(s);
-					res += to_string(s) + ",";
+					res += (char)s;
+					res += ",";
 				}
 				sacar(s);
-			}
-			else if (esOperador(c)) {
-				while (!vacia() && prioridad(c) <= prioridad(cima())) {
+			} else if (esOperador(c)) {
+				while (!vacia() && prioridad(c) < prioridad(cima())) {
 					int s;
 					sacar(s);
-					res += to_string(s) + ",";
+					res += (char)s;
+					res += ",";
 				}
 				meter(c);
 			}
@@ -213,61 +306,13 @@ string Pila_CSMemoria :: postfija(string exp) {
 	while (!vacia()) {
 		int s;
 		sacar(s);
-		res += to_string(s) + ",";
+		res += (char)s;
+		res += ",";
 	}
-	return res;
-}
-
-//---------------------------------------------------------------------------
-string Pila_CSMemoria :: invertido(string s) {
-	string r = "";
-	for (int i = 0; i < s.length(); i++)
-		r = s[i] + r;
-	return r;
-}
-//---------------------------------------------------------------------------
-string Pila_CSMemoria :: prefija(string exp) {
-	string res = "";
-	string num = "";
-	for (int i = exp.length() - 1; i >= 0; i--) {
-		char c = exp[i];
-		if (isdigit(c)) {
-			num = c + num;
-		} else {
-			if (!num.empty()) {
-				res = num + "," + res;
-				num = "";
-			}
-
-			if (c == ')')
-				meter(c);
-			else if (c == '(') {
-				int s;
-				while (cima() != ')') {
-					sacar(s);
-					res = to_string(s) + "," + res;
-				}
-				sacar(s);
-			}
-			else if (esOperador(c)) {
-				while (!vacia() && prioridad(c) < prioridad(cima())) {
-					int s;
-					sacar(s);
-					res = to_string(s) + "," + res;
-				}
-				meter(c);
-			}
-		}
+	if (!res.empty() && res.back() == ',') {
+		res.pop_back();
 	}
-	if (!num.empty()) {
-		res = num + "," + res;
-	}
-	while (!vacia()) {
-		int s;
-		sacar(s);
-		res = to_string(s) + "," + res;
-	}
-    return res;
+	return invertido(res);
 }
 
 //---------------------------------------------------------------------------

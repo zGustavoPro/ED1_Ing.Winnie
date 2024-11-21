@@ -69,17 +69,17 @@ Form1->Close();
 void __fastcall TForm1::Button10Click(TObject *Sender)
 {
 AnsiString cad=InputBox("ingrese el ejercicio a resolver","","");
-AnsiString cad2=pila->postfija(cad.c_str(),300,80,Canvas).c_str();
+AnsiString cad2=pila->postfija(cad.c_str()).c_str();
 ShowMessage(cad2);
-ShowMessage(pila->evaluar_PosFija(cad2,300,80,Canvas));
+ShowMessage(pila->evaluar_PosFija(cad2));
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button11Click(TObject *Sender)
 {
   AnsiString cad=InputBox("ingrese el ejercicio a resolver","","");
-  AnsiString cad2=pila->prefija(cad.c_str(),300,80,Canvas).c_str();
+  AnsiString cad2=pila->prefija(cad.c_str()).c_str();
   ShowMessage(cad2);
-  ShowMessage(pila->evaluar_PreFija(cad2,300,80,Canvas));
+  ShowMessage(pila->evaluar_PreFija(cad2));
 }
 //---------------------------------------------------------------------------
 
